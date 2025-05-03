@@ -1,10 +1,10 @@
-package com.highwayfc.team.mgmt;
+package com.highwayfc.playerservices;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TeamManagementApplicationTests {
+class PlayerMgmtServicesApplicationTests {
 
     @Test
     void contextLoads() {
