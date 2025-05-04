@@ -1,7 +1,11 @@
 package com.highwayfc.playerservices.controller;
 
 import com.highwayfc.playerservices.domain.model.Player;
+import com.highwayfc.playerservices.dto.APIResponse;
+import com.highwayfc.playerservices.dto.PlayerResponseDto;
+import com.highwayfc.playerservices.dto.PlayerSearchRequest;
 import com.highwayfc.playerservices.service.PlayerService;
+import com.highwayfc.playerservices.utils.AppConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,13 +48,23 @@ public class PlayerController {
         return new ResponseEntity<>("Player deleted", HttpStatus.OK);
     }
 
-
     //Get All Players by Status or Position
     @GetMapping
-    public ResponseEntity<List<Player>> getPlayers(@RequestParam(required = false) String position){
-      var players= playerService.getAllPlayers();
-      return new ResponseEntity<>(players, HttpStatus.OK);
+    public APIResponse<PlayerResponseDto> getAllPlayers(
+            @RequestParam(value = "pageNo",defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,required = false) int pageNo,
+            @RequestParam(value = "pageSize",defaultValue = AppConstants.DEFAULT_PAGE_SIZE,required = false)int pageSize,
+            @RequestParam(value = "sortBy",defaultValue = AppConstants.DEFAULT_SORT_BY,required = false)String sortBy,
+            @RequestParam(value = "sortDir",defaultValue = AppConstants.DEFAULT_SORT_DIR,required = false)String sortDir
+    ){
+      return playerService.getAllPlayers(pageNo,pageSize,sortBy,sortDir);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Player>> searchPlayers(@ModelAttribute PlayerSearchRequest request){
+        var players = playerService.searchPlayers(request);
+        return  new ResponseEntity<>(players, HttpStatus.OK);
     }
     //Upload Document
     //POST /players/{id}/documents
+
 }
