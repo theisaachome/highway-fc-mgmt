@@ -13,7 +13,8 @@ public class TeamPlayer extends BaseEntity{
 
     private Long teamId;
     private Long playerId;
-
+    private String playerIDNumber;
+    private String playerName;
     private String role; // e.g., "Captain", "Vice-Captain"
     private LocalDate joinedDate;
 }

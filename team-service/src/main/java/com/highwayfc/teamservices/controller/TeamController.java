@@ -1,6 +1,7 @@
 package com.highwayfc.teamservices.controller;
 
 import com.highwayfc.teamservices.domain.model.Team;
+import com.highwayfc.teamservices.dto.AssignPlayerRequest;
 import com.highwayfc.teamservices.services.TeamService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,11 @@ public class TeamController {
 
 //    Assignments
 //    POST /teams/{id}/players → Assign players
+    @PostMapping("/assign-player")
+    public ResponseEntity<String> assignPlayerToTeam(@RequestBody AssignPlayerRequest request){
+        teamService.assignPlayerToTeam(request);
+        return  new ResponseEntity<>("Player assigned to A team",HttpStatus.OK);
+    }
 //
 //    POST /teams/{id}/staff → Assign staff
 //

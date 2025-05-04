@@ -2,6 +2,7 @@ package com.highwayfc.playerservices.controller;
 
 import com.highwayfc.playerservices.domain.model.Player;
 import com.highwayfc.playerservices.dto.APIResponse;
+import com.highwayfc.playerservices.dto.PlayerDto;
 import com.highwayfc.playerservices.dto.PlayerResponseDto;
 import com.highwayfc.playerservices.dto.PlayerSearchRequest;
 import com.highwayfc.playerservices.service.PlayerService;
@@ -66,5 +67,15 @@ public class PlayerController {
     }
     //Upload Document
     //POST /players/{id}/documents
+
+    //Check if player is valid/active
+    //GET /api/players/validate?id={id}
+    @GetMapping("/validate")
+    public ResponseEntity<PlayerDto> validatePlayer(
+            @RequestParam(value = "playerId") Long playerId
+    ){
+        var validPlayer = playerService.validatePlayer(playerId);
+        return new ResponseEntity<>(validPlayer,HttpStatus.OK);
+    }
 
 }

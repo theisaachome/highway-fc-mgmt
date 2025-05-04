@@ -3,6 +3,7 @@ import com.highwayfc.playerservices.domain.exception.ResourceNotFoundException;
 import com.highwayfc.playerservices.domain.model.Player;
 import com.highwayfc.playerservices.domain.model.PlayerStatus;
 import com.highwayfc.playerservices.dto.APIResponse;
+import com.highwayfc.playerservices.dto.PlayerDto;
 import com.highwayfc.playerservices.dto.PlayerResponseDto;
 import com.highwayfc.playerservices.dto.PlayerSearchRequest;
 import com.highwayfc.playerservices.repository.PlayerRepo;
@@ -108,5 +109,16 @@ public class PlayerServiceImpl implements PlayerService {
                 players.getTotalPages(),
                 players.isLast()
         );
+    }
+
+    @Override
+    public PlayerDto validatePlayer(Long playerId) {
+        // find active player
+        var activePlayer = playerRepo.findById(playerId).orElseThrow(()-> new ResourceNotFoundException("Player","ID",playerId));
+            return new PlayerDto(activePlayer.getId(),
+                    activePlayer.getPlayerID(),
+                    activePlayer.getFullName(),
+                    activePlayer.getStatus());
+
     }
 }
